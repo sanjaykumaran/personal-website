@@ -32,16 +32,13 @@ plane.rotation.x = Math.PI / 2;
 // make a shadow from the cube on the plane
 const light = new THREE.DirectionalLight( 0xffffff, 1 );
 
+scene.add(new THREE.CameraHelper(camera)) 
+
 
 light.position.set( 0, 1, 1 ).normalize();
 scene.add( light );
 cube.castShadow = true;
 plane.receiveShadow = true;
-
-
-
-
-
 
 
 
