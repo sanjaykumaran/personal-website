@@ -1,18 +1,23 @@
 import * as THREE from "three";
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
-const cube = new THREE.Mesh( geometry, material );
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
 
 cube.castShadow = true;
-scene.add( cube );
+scene.add(cube);
 
 camera.position.z = 5;
 
@@ -21,17 +26,17 @@ cube.scale.x = 2;
 cube.scale.y = 2;
 cube.scale.z = 2;
 
-
-
 // add a plane
-const planeGeometry = new THREE.PlaneGeometry( 600, 600 );
-const planeMaterial = new THREE.MeshLambertMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
-const plane = new THREE.Mesh( planeGeometry, planeMaterial );
-
+const planeGeometry = new THREE.PlaneGeometry(600, 600);
+const planeMaterial = new THREE.MeshLambertMaterial({
+  color: 0xffff00,
+  side: THREE.DoubleSide,
+});
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
 plane.receiveShadow = true;
 
-scene.add( plane );
+scene.add(plane);
 // put the plane on the ground
 // put it more down
 plane.position.y = -10;
@@ -54,27 +59,20 @@ const light3 = new THREE.PointLight(0xffffff, 100, 100);
 light3.position.set(0, 0, 10);
 // scene.add(light3);
 
-
 // renderer.shadowMap.enabled = true;
-
 
 // add an ambient light
 const ambientLight = new THREE.AmbientLight(0xffffff, 100.5);
 ambientLight.position.set(0, 4, 0);
 
-
-
 // add a shadow camera
 light.castShadow = true;
 // ambientLight.castShadow = true;
-
 
 // make the shadow softer
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 // make the shadow grey
 renderer.shadowMap.type = THREE.BasicShadowMap;
-
-
 
 // set the shadow properties of the light
 light.shadow.mapSize.width = 2512;
@@ -82,50 +80,40 @@ light.shadow.mapSize.height = 2512;
 light.shadow.camera.near = 0.5;
 light.shadow.camera.far = 500;
 
-
 // make the shadow grey
 renderer.shadowMap.type = THREE.BasicShadowMap;
 
-
-
+THREE.Object3D.DefaultUp = new THREE.Vector3(0, 0, 1);
 
 // scene.add(ambientLight);
-
 
 // there is no shadow
 // scene.background = new THREE.Color(0x000000);
 
-
-
-
 renderer.shadowMap.enabled = true;
 
-
 // add a helper to see the light
-// scene.add(new THREE.CameraHelper(light.shadow.camera)) 
-// scene.add(new THREE.CameraHelper(ambientLight.shadow.camera)) 
+// scene.add(new THREE.CameraHelper(light.shadow.camera))
+// scene.add(new THREE.CameraHelper(ambientLight.shadow.camera))
 
 function animate() {
-	requestAnimationFrame( animate );
+  requestAnimationFrame(animate);
 
+  scene.background = null;
 
-	scene.background = null;
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
 
-	
-
-	cube.rotation.x += 0.01;
-	cube.rotation.y += 0.01;
-
-	renderer.render( scene, camera );
+  renderer.render(scene, camera);
 }
 
 animate();
 
 // make it response to window resize
-window.addEventListener('resize', function() {
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-	renderer.setSize(window.innerWidth, window.innerHeight);
+window.addEventListener("resize", function () {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
 // // make it response to mouse move
@@ -136,7 +124,6 @@ window.addEventListener('resize', function() {
 // });
 
 // use orbit controls
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
-

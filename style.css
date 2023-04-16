@@ -4,3 +4,23 @@ body {
     color: #ffffff;
 }
  */
+
+/* change color of selection text */
+
+/* change font to */
+
+::selection {
+  background: red;
+  background-color: #00e100;
+}
+
+.p {
+  background-color: #239130;
+  color: #36ba8c;
+}
+
+/* change color of selection text using focus text area */
+textarea:focus {
+  background-color: #239130;
+  color: #36ba8c;
+}
