@@ -38,15 +38,29 @@ plane.position.y = -10;
 plane.rotation.x = Math.PI / 2;
 
 // add a light
-const light = new THREE.PointLight(0xffffff, 1000, 100);
-light.position.set(0, 3, 0);
+const light = new THREE.PointLight(0xffffff, 10, 50);
+light.position.set(0, 10, 0);
+// scene.add(light);
+
+// make more lights to illuminate the scene
+const light2 = new THREE.PointLight(0xffffff, 10, 200);
+light2.position.set(10, 10, 0);
+scene.add(light2);
+light2.castShadow = true;
+
+// make more lights to illuminate the scene
+
+const light3 = new THREE.PointLight(0xffffff, 100, 100);
+light3.position.set(0, 0, 10);
+// scene.add(light3);
+
 
 // renderer.shadowMap.enabled = true;
 
 
 // add an ambient light
-// const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-// ambientLight.position.set(0, 1, 0);
+const ambientLight = new THREE.AmbientLight(0xffffff, 100.5);
+ambientLight.position.set(0, 4, 0);
 
 
 
@@ -55,19 +69,34 @@ light.castShadow = true;
 // ambientLight.castShadow = true;
 
 
+// make the shadow softer
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// make the shadow grey
+renderer.shadowMap.type = THREE.BasicShadowMap;
+
+
+
 // set the shadow properties of the light
-light.shadow.mapSize.width = 512;
-light.shadow.mapSize.height = 512;
+light.shadow.mapSize.width = 2512;
+light.shadow.mapSize.height = 2512;
 light.shadow.camera.near = 0.5;
 light.shadow.camera.far = 500;
 
 
-scene.add(light);
+// make the shadow grey
+renderer.shadowMap.type = THREE.BasicShadowMap;
+ 
+
+
+
 // scene.add(ambientLight);
 
 
 // there is no shadow
 // scene.background = new THREE.Color(0x000000);
+
+
+
 
 renderer.shadowMap.enabled = true;
 
