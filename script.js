@@ -24,7 +24,7 @@ cube.scale.z = 2;
 
 
 // add a plane
-const planeGeometry = new THREE.PlaneGeometry( 100, 100 );
+const planeGeometry = new THREE.PlaneGeometry( 600, 600 );
 const planeMaterial = new THREE.MeshLambertMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
 const plane = new THREE.Mesh( planeGeometry, planeMaterial );
 
@@ -85,7 +85,7 @@ light.shadow.camera.far = 500;
 
 // make the shadow grey
 renderer.shadowMap.type = THREE.BasicShadowMap;
- 
+
 
 
 
