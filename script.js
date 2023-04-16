@@ -8,8 +8,10 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const material = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
 const cube = new THREE.Mesh( geometry, material );
+
+cube.castShadow = true;
 scene.add( cube );
 
 camera.position.z = 5;
@@ -19,31 +21,68 @@ cube.scale.x = 2;
 cube.scale.y = 2;
 cube.scale.z = 2;
 
+
+
 // add a plane
 const planeGeometry = new THREE.PlaneGeometry( 100, 100 );
-const planeMaterial = new THREE.MeshBasicMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
+const planeMaterial = new THREE.MeshLambertMaterial( { color: 0xffff00, side: THREE.DoubleSide } );
 const plane = new THREE.Mesh( planeGeometry, planeMaterial );
+
+
+plane.receiveShadow = true;
+
 scene.add( plane );
 // put the plane on the ground
 // put it more down
 plane.position.y = -10;
 plane.rotation.x = Math.PI / 2;
 
-// make a shadow from the cube on the plane
-const light = new THREE.DirectionalLight( 0xffffff, 1 );
+// add a light
+const light = new THREE.PointLight(0xffffff, 1000, 100);
+light.position.set(0, 3, 0);
 
-scene.add(new THREE.CameraHelper(camera)) 
-
-
-light.position.set( 0, 1, 1 ).normalize();
-scene.add( light );
-cube.castShadow = true;
-plane.receiveShadow = true;
+// renderer.shadowMap.enabled = true;
 
 
+// add an ambient light
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+// ambientLight.position.set(0, 1, 0);
+
+
+
+// add a shadow camera
+light.castShadow = true;
+// ambientLight.castShadow = true;
+
+
+// set the shadow properties of the light
+light.shadow.mapSize.width = 512;
+light.shadow.mapSize.height = 512;
+light.shadow.camera.near = 0.5;
+light.shadow.camera.far = 500;
+
+
+scene.add(light);
+// scene.add(ambientLight);
+
+
+// there is no shadow
+// scene.background = new THREE.Color(0x000000);
+
+renderer.shadowMap.enabled = true;
+
+
+// add a helper to see the light
+// scene.add(new THREE.CameraHelper(light.shadow.camera)) 
+// scene.add(new THREE.CameraHelper(ambientLight.shadow.camera)) 
 
 function animate() {
 	requestAnimationFrame( animate );
+
+
+	scene.background = null;
+
+	
 
 	cube.rotation.x += 0.01;
 	cube.rotation.y += 0.01;
@@ -60,10 +99,15 @@ window.addEventListener('resize', function() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// make it response to mouse move
-document.addEventListener('mousemove', function(event) {
-	camera.position.x = event.clientX / window.innerWidth * 10 - 5;
-	camera.position.y = event.clientY / window.innerHeight * 10 - 5;
-	camera.lookAt(scene.position);
-});
+// // make it response to mouse move
+// document.addEventListener('mousemove', function(event) {
+// 	camera.position.x = event.clientX / window.innerWidth * 10 - 5;
+// 	camera.position.y = event.clientY / window.innerHeight * 10 - 5;
+// 	camera.lookAt(scene.position);
+// });
+
+// use orbit controls
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.update();
 
