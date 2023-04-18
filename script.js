@@ -8,6 +8,27 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
+// LIGHTS
+
+const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+hemiLight.color.setHSL( 0.6, 1, 0.6 );
+hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+hemiLight.position.set( 0, 50, 0 );
+scene.add( hemiLight );
+
+const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
+scene.add( hemiLightHelper );
+
+//
+
+const dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+dirLight.color.setHSL( 0.1, 1, 0.95 );
+dirLight.position.set( - 1, 1.75, 1 );
+dirLight.position.multiplyScalar( 30 );
+scene.add( dirLight );
+
+
+
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -108,6 +129,14 @@ ground.rotation.x = - Math.PI / 2;
 ground.receiveShadow = true;
 scene.add( ground );
 
+
+// change sky color not working using THREE.sky
+renderer.setClearColor( 0xffffff, 0);
+
+scene.background = new THREE.Color(0xffffff);
+
+
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -134,6 +163,21 @@ window.addEventListener("resize", function () {
 // 	camera.position.y = event.clientY / window.innerHeight * 10 - 5;
 // 	camera.lookAt(scene.position);
 // });
+
+
+function render() {
+
+  const delta = clock.getDelta();
+
+  for ( let i = 0; i < mixers.length; i ++ ) {
+
+    mixers[ i ].update( delta );
+
+  }
+
+  renderer.render( scene, camera );
+
+}
 
 // use orbit controls
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
