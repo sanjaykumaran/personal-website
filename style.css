@@ -7,11 +7,37 @@ body {
 
 /* change color of selection text */
 
-/* change font to */
+/* change font to LL Riforma*/
+
+
+@font-face {
+    font-family: 'Riforma LL';
+    src: url('./fonts/RiformaLL-Regular.eot');
+    src: url('./fonts/RiformaLL-Regular.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/RiformaLL-Regular.woff2') format('woff2'),
+        url('./fonts/RiformaLL-Regular.woff') format('woff'),
+        url('./fonts/RiformaLL-Regular.ttf') format('truetype'),
+        url('./fonts/RiformaLL-Regular.svg#RiformaLL-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+body {
+    font-family: 'Riforma LL';
+    font-style: normal;
+    font-weight: 10;
+    font-size: 17px;
+}
+
+
+
+
 
 ::selection {
-  background: red;
-  background-color: #00e100;
+  background: #00e100;
+  color: #19232d;
 }
 
 .p {

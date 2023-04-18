@@ -27,7 +27,7 @@ cube.scale.y = 2;
 cube.scale.z = 2;
 
 // add a plane
-const planeGeometry = new THREE.PlaneGeometry(600, 600);
+const planeGeometry = new THREE.PlaneGeometry(10000, 10000);
 const planeMaterial = new THREE.MeshLambertMaterial({
   color: 0xffff00,
   side: THREE.DoubleSide,
@@ -36,19 +36,20 @@ const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
 plane.receiveShadow = true;
 
-scene.add(plane);
+// scene.add(plane);
 // put the plane on the ground
 // put it more down
 plane.position.y = -10;
 plane.rotation.x = Math.PI / 2;
 
+
 // add a light
 const light = new THREE.PointLight(0xffffff, 10, 50);
 light.position.set(0, 10, 0);
-// scene.add(light);
+// scene.add(light); 
 
 // make more lights to illuminate the scene
-const light2 = new THREE.PointLight(0xffffff, 10, 200);
+const light2 = new THREE.PointLight(0xffffff, 0.8, 10000);
 light2.position.set(10, 10, 0);
 scene.add(light2);
 light2.castShadow = true;
@@ -66,7 +67,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 100.5);
 ambientLight.position.set(0, 4, 0);
 
 // add a shadow camera
-light.castShadow = true;
+// light.castShadow = true;
 // ambientLight.castShadow = true;
 
 // make the shadow softer
@@ -75,8 +76,8 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.shadowMap.type = THREE.BasicShadowMap;
 
 // set the shadow properties of the light
-light.shadow.mapSize.width = 2512;
-light.shadow.mapSize.height = 2512;
+// light.shadow.mapSize.width = 2512;
+// light.shadow.mapSize.height = 2512;
 light.shadow.camera.near = 0.5;
 light.shadow.camera.far = 500;
 
@@ -95,6 +96,17 @@ renderer.shadowMap.enabled = true;
 // add a helper to see the light
 // scene.add(new THREE.CameraHelper(light.shadow.camera))
 // scene.add(new THREE.CameraHelper(ambientLight.shadow.camera))
+
+
+const groundGeo = new THREE.PlaneGeometry( 10000, 10000 );
+const groundMat = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+groundMat.color.setHSL( 0.095, 1, 0.75 );
+
+const ground = new THREE.Mesh( groundGeo, groundMat );
+ground.position.y = - 33;
+ground.rotation.x = - Math.PI / 2;
+ground.receiveShadow = true;
+scene.add( ground );
 
 function animate() {
   requestAnimationFrame(animate);
