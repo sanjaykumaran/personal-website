@@ -81,17 +81,9 @@ light3.position.set(0, 0, 10);
 // renderer.shadowMap.enabled = true;
 
 // add an ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff, 100.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 10.5);
 ambientLight.position.set(0, 4, 0);
 
-// add a shadow camera
-// light.castShadow = true;
-// ambientLight.castShadow = true;
-
-// make the shadow softer
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-// make the shadow grey
-renderer.shadowMap.type = THREE.BasicShadowMap;
 
 // set the shadow properties of the light
 // light.shadow.mapSize.width = 2512;
@@ -139,26 +131,51 @@ const loader = new STLLoader();
 // load the stl model
 loader.load("david-head.stl", function (geometry) {
   // create a material
-  const material2 = new THREE.MeshLambertMaterial({
-    color: 0x00ff00
+  const material2 = new THREE.MeshBasicMaterial({
+    color: 0x00ff00,
+    side: THREE.DoubleSide
   });
   // create a mesh
-  const mesh = new THREE.Mesh(geometry, material2);
+  const headmesh = new THREE.Mesh(geometry, material2);
   // add the mesh to the scene
-  scene.add(mesh);
+  scene.add(headmesh);
   // make the mesh smaller
-  mesh.scale.x = 0.01;
-  mesh.scale.y = 0.01;
-  mesh.scale.z = 0.01;
+  headmesh.scale.x = 0.02;
+  headmesh.scale.y = 0.02;
+  headmesh.scale.z = 0.02;
   // put the mesh on the ground
-  mesh.position.y = -1;
+  headmesh.position.y = -1;
   // make the mesh cast shadow
-  mesh.castShadow = true;
+  headmesh.castShadow = true;
   
+  // make the mesh white
+  // headmesh.material.color.setRGB(1, 1, 1);
+
+  function addShadowedLight( x, y, z, color, intensity ) {
+
+				const directionalLight = new THREE.DirectionalLight( color, intensity );
+				directionalLight.position.set( x, y, z );
+				scene.add( directionalLight );
+
+				directionalLight.castShadow = true;
+
+				const d = 1;
+				directionalLight.shadow.camera.left = - d;
+				directionalLight.shadow.camera.right = d;
+				directionalLight.shadow.camera.top = d;
+				directionalLight.shadow.camera.bottom = - d;
+
+				directionalLight.shadow.camera.near = 1;
+				directionalLight.shadow.camera.far = 4;
+
+				directionalLight.shadow.bias = - 0.002;
+
+			}
+
 });
 
 
-
+scene.remove(cube);
 
 
 function animate() {
@@ -166,8 +183,8 @@ function animate() {
 
   scene.background = null;
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }
