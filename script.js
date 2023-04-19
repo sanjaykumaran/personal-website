@@ -44,21 +44,6 @@ scene.add(cube);
 camera.position.z = 5;
 
 
-// add a plane
-const planeGeometry = new THREE.PlaneGeometry(10000, 10000);
-const planeMaterial = new THREE.MeshLambertMaterial({
-  color: 0xffff00,
-  side: THREE.DoubleSide,
-});
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-
-plane.receiveShadow = true;
-
-// scene.add(plane);
-// put the plane on the ground
-// put it more down
-plane.position.y = -10;
-plane.rotation.x = Math.PI / 2;
 
 
 // add a light
@@ -131,23 +116,28 @@ const loader = new STLLoader();
 // load the stl model
 loader.load("david-head.stl", function (geometry) {
   // create a material
-  const material2 = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
-    side: THREE.DoubleSide
+  const material2 = new THREE.MeshLambertMaterial({
+    color: 0xffffff,
+    specular: 0x111111, 
+    shininess: 200
+    
   });
+
+
   // create a mesh
   const headmesh = new THREE.Mesh(geometry, material2);
   // add the mesh to the scene
   scene.add(headmesh);
   // make the mesh smaller
-  headmesh.scale.x = 0.02;
-  headmesh.scale.y = 0.02;
-  headmesh.scale.z = 0.02;
+  headmesh.scale.x = 0.01;
+  headmesh.scale.y = 0.01;
+  headmesh.scale.z = 0.01;
   // put the mesh on the ground
   headmesh.position.y = -1;
   // make the mesh cast shadow
   headmesh.castShadow = true;
-  
+
+});
   // make the mesh white
   // headmesh.material.color.setRGB(1, 1, 1);
 
@@ -170,9 +160,8 @@ loader.load("david-head.stl", function (geometry) {
 
 				directionalLight.shadow.bias = - 0.002;
 
-			}
 
-});
+};
 
 
 scene.remove(cube);
@@ -183,8 +172,8 @@ function animate() {
 
   scene.background = null;
 
-  // cube.rotation.x += 0.01;
-  // cube.rotation.y += 0.01;
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }
@@ -204,6 +193,7 @@ window.addEventListener("resize", function () {
 // 	camera.position.y = event.clientY / window.innerHeight * 10 - 5;
 // 	camera.lookAt(scene.position);
 // });
+
 
 
 function render() {
