@@ -33,7 +33,8 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+// add a cube
+const geometry = new THREE.BoxGeometry(2, 2, 2);
 const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
 const cube = new THREE.Mesh(geometry, material);
 
@@ -42,10 +43,6 @@ scene.add(cube);
 
 camera.position.z = 5;
 
-// make the cube a little bit bigger
-cube.scale.x = 2;
-cube.scale.y = 2;
-cube.scale.z = 2;
 
 // add a plane
 const planeGeometry = new THREE.PlaneGeometry(10000, 10000);
@@ -134,6 +131,33 @@ scene.add( ground );
 renderer.setClearColor( 0xffffff, 0);
 
 scene.background = new THREE.Color(0xffffff);
+
+// import an stl model named "model"
+import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+// use the stl loader
+const loader = new STLLoader();
+// load the stl model
+loader.load("david-head.stl", function (geometry) {
+  // create a material
+  const material2 = new THREE.MeshLambertMaterial({
+    color: 0x00ff00
+  });
+  // create a mesh
+  const mesh = new THREE.Mesh(geometry, material2);
+  // add the mesh to the scene
+  scene.add(mesh);
+  // make the mesh smaller
+  mesh.scale.x = 0.01;
+  mesh.scale.y = 0.01;
+  mesh.scale.z = 0.01;
+  // put the mesh on the ground
+  mesh.position.y = -1;
+  // make the mesh cast shadow
+  mesh.castShadow = true;
+  
+});
+
+
 
 
 

@@ -3,11 +3,6 @@
   <head lang="en">
     <meta charset="utf-8" />
     <title>WOW first three.js app</title>
-    <style>
-      body {
-        margin: 0;
-      }
-    </style>
   </head>
   <body>
     <script
@@ -16,14 +11,15 @@
     ></script>
   
 
-    
+
 
     <script type="importmap">
       {
         "imports": {
           "three": "https://unpkg.com/three@0.151.3/build/three.module.js",
           "three/addons/": "https://unpkg.com/three@0.151.3/examples/jsm/",
-          "three/examples/jsm/controls/OrbitControls.js": "https://unpkg.com/three@0.151.3/examples/jsm/controls/OrbitControls.js"
+          "three/examples/jsm/controls/OrbitControls.js": "https://unpkg.com/three@0.151.3/examples/jsm/controls/OrbitControls.js",
+          "three/examples/jsm/loaders/STLLoader.js": "https://unpkg.com/three@0.151.3/examples/jsm/loaders/STLLoader.js"
         }
       }
     </script>
@@ -32,7 +28,8 @@
 
 
     <script type="module" src="script.js"></script>
-    <p>hi</p>
+    <div>
+    <h1>Howdy, I'm Sanjay Kumaran!</h1>
     <p style="position: absolute; top: -8; left: 0; z-index: 1;"">
     
       A bit about me, I am a passionate Software Developer. I love to solve
@@ -42,7 +39,10 @@
       opportunity to work along with a revered Microsoft Engineering team to
       solve problems and make an Impact!
     </p>
+    </div>
+    
   </body>
   <!-- use style.csss -->
   <link rel="stylesheet" href="style.css" />
 </html>
+

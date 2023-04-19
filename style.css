@@ -9,7 +9,13 @@ body {
 
 /* change font to LL Riforma*/
 
-
+div {
+    position: fixed;
+    top: 50%;
+    left: 37%;
+    transform: translate(-50%);
+  }
+  
 @font-face {
     font-family: 'Riforma LL';
     src: url('./fonts/RiformaLL-Regular.eot');
